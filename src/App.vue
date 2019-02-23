@@ -1,17 +1,33 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <Posts />
   </div>
 </template>
 
 <script>
+import Posts from './components/Posts.vue'
 import HelloWorld from './components/HelloWorld.vue'
 
 export default {
   name: 'app',
   components: {
+    Posts,
     HelloWorld
+  },
+
+  created () {
+    console.log('before mount')
+    this.getPosts()
+  },
+
+  methods: {
+    getPosts () {
+      this.$store.dispatch('getPosts')
+    }
+  },
+
+  mounted () {
+    console.log('app.vue')
   }
 }
 </script>
