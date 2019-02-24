@@ -25,6 +25,7 @@
 <script>
 export default {
   name: 'Info',
+
   props: {
     post: Object
   },
@@ -37,16 +38,12 @@ export default {
     },
 
     imageExists(url) {
-      if (url === 'self' || url === 'default') {
+      if (url === 'self' || url === 'default' || url === 'nsfw') {
         return false
       } else {
         return true
       }
     }
-  },
-
-  mounted () {
-    console.log('item.vue')
   }
 }
 </script>
@@ -70,4 +67,3 @@ export default {
   clear: both;
 }
 </style>
-

@@ -10,13 +10,13 @@ import HelloWorld from './components/HelloWorld.vue'
 
 export default {
   name: 'app',
+
   components: {
     Posts,
     HelloWorld
   },
 
   created () {
-    console.log('before mount')
     this.getPosts()
   },
 
@@ -24,10 +24,6 @@ export default {
     getPosts () {
       this.$store.dispatch('getPosts')
     }
-  },
-
-  mounted () {
-    console.log('app.vue')
   }
 }
 </script>

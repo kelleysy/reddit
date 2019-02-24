@@ -3,7 +3,7 @@
     <div v-for="(posts, key, index) in subreddits"
          :key="index">
       <h4>{{ key }} ({{ posts.length }})</h4>
-      <Info v-for="post in posts"
+      <Info v-for="post in ordered(posts)"
             :post="post" />
     </div>
   </div>
@@ -26,6 +26,17 @@ export default {
     }
   },
 
+  methods: {
+    ordered (posts) {
+      if (posts.length === 1) { return posts }
+      else {
+        return posts.sort((a, b) => {
+          return b.data.ups - a.data.ups
+        })
+      }
+    }
+  },
+
   computed: {
     ...mapGetters([
       'unsortedPosts'
@@ -33,27 +44,15 @@ export default {
 
     subreddits () {
       if (!this.unsortedPosts) { return }
-      return this.unsortedPosts.reduce((carry, current) => {
-        console.log(carry)
-        console.log(current.data.subreddit)
-        if (carry.hasOwnProperty(current.data.subreddit) && Array.isArray(carry[current.data.subreddit])) {
-          carry[current.data.subreddit].push(current)
+      return this.unsortedPosts.reduce((groups, post) => {
+        if (groups.hasOwnProperty(post.data.subreddit) && Array.isArray(groups[post.data.subreddit])) {
+          groups[post.data.subreddit].push(post)
         } else {
-          Object.assign(carry, { [current.data.subreddit]: [current] })
+          Object.assign(groups, { [post.data.subreddit]: [post] })
         }
-        return carry
-      }, {})}
-  },
-
-  methods: {
-   getDate (unixTimeStamp) {
-      return new Date(unixTimeStamp * 1000) 
+        return groups
+      }, {})
     }
-  },
-
-  mounted () {
-    this.unsortedPosts
-    console.log('posts.vue')
   }
 }
 </script>

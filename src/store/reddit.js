@@ -23,12 +23,9 @@ export default {
 
   actions: {
     getPosts (context) {
-      console.log('store get posts')
-      let cors = 'https://cors.io/?'
-      let api = `${cors}https://www.reddit.com/.json`
+      let api = 'https://www.reddit.com/.json'
       axios({ method: 'GET', url: api }).then(response => {
         context.commit('setUnsortedPosts', response)
-        console.log('commit the getter')
       }, error => {
         console.error(error)
       })
